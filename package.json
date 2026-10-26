@@ -1,13 +1,15 @@
 {
   "name": "my-project",
   "private": true,
+  "engines": { "node": ">=22" },
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "node server.js"
   },
   "dependencies": {
     "@syncfusion/ej2-material-theme": "^35.1.41",
