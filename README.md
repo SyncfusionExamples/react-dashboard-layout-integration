@@ -2,41 +2,62 @@
 
 ## Description and Purpose
 
-This sample shows how to use the **Syncfusion React Dashboard Layout** component (`DashboardLayoutComponent`) to build a responsive, interactive sales dashboard with React 19, TypeScript and Vite.
+This sample shows how to use the **Syncfusion React Dashboard Layout** component (`DashboardLayoutComponent`) in a React 19 + TypeScript + Vite application.
 
-The dashboard is a 12-column grid of four panels (a data table and three charts) filled with sample sales data. Users can drag panels around and resize them, and the layout adapts to small screens. The sample is meant as a starting point for evaluating the Dashboard Layout component and for hosting it in production, including under a sub-path (for example Azure Linux App Service behind a Google Cloud Load Balancer).
+It demonstrates:
+
+- Draggable and resizable dashboard panels.
+- Responsive behavior on desktop and smaller screens.
+- Saving and restoring the panel layout with the component's built-in persistence.
+- Rendering your own React components inside panels.
+- Hosting the app under a configurable base path.
 
 ## Features
 
-### 1. Panel-based 12-column grid
+### 1. Draggable and resizable panels
 
-`DashboardLayoutComponent` splits the container into 12 columns. Each `PanelDirective` sets its position and size in grid cells. Its `content` is any React component.
+The dashboard is a 12-column grid. Each `PanelDirective` defines its position (`row`, `col`), size (`sizeX`, `sizeY`) and minimum size. `allowResizing` lets users resize panels, and panels can be dragged to rearrange them.
 
 ```tsx
-<DashboardLayoutComponent cellSpacing={[10, 10]} columns={12} allowResizing={true} enablePersistence={true}>
+import { DashboardLayoutComponent, PanelsDirective, PanelDirective } from '@syncfusion/ej2-react-layouts';
+
+<DashboardLayoutComponent
+  cellSpacing={[10, 10]}
+  columns={12}
+  allowResizing={true}
+  enablePersistence={true}
+>
   <PanelsDirective>
     <PanelDirective
       id="panel-1"
-      header="Sales Data Table"
-      content={() => <DataTablePanel data={SAMPLE_SALES_DATA} />}
+      header="Panel 1"
+      content={() => <MyPanelContent />}
       row={0} col={0} sizeX={6} sizeY={5} minSizeX={4} minSizeY={4}
     />
-    {/* panel-2, panel-3, panel-4 ... */}
+    {/* more panels ... */}
   </PanelsDirective>
 </DashboardLayoutComponent>
 ```
 
-### 2. Drag and resize
+`minSizeX` and `minSizeY` stop a panel from being resized below a usable size.
 
-`allowResizing` lets users resize panels. Panels can be dragged by their header. `minSizeX` and `minSizeY` keep each panel from becoming too small to use.
+### 2. React components as panel content
 
-### 3. Layout persistence
+The `content` property of a panel takes a function that returns any React element. Each panel's content is a regular React component, so the dashboard stays declarative and panels are easy to add, remove or replace.
 
-`enablePersistence={true}` saves the user's panel arrangement in the browser, so it is restored on reload.
+The component fills the panel, so give the content a full-size container:
 
-### 4. Responsive layout
+```tsx
+const MyPanelContent: React.FC = () => (
+  <div className="panel-content" style={{ width: '100%', height: '100%' }}>
+    {/* your component */}
+  </div>
+);
+```
 
-The app tracks the window width and picks a different panel layout for screens narrower than 600 px. On mobile, panels stack in a single full-width column.
+### 3. Responsive layout
+
+The sample tracks the window width and chooses a different panel arrangement below 600 px. On small screens the panels stack in a single full-width column. On larger screens they use a multi-column arrangement.
 
 ```tsx
 const [isMobile, setIsMobile] = useState(window.innerWidth < 600);
@@ -52,94 +73,116 @@ const layout = isMobile
   : [{ id: 'panel-1', row: 0, col: 0, sizeX: 6,  sizeY: 5, minSizeX: 4,  minSizeY: 4 } /* ... */];
 ```
 
-### 5. Panel content as React components
+The panel values come from this layout:
 
-Each panel renders its own component through the `content` template, so the dashboard stays declarative and each panel is easy to replace.
+```tsx
+<PanelDirective
+  id="panel-1"
+  row={layout[0].row}
+  col={layout[0].col}
+  sizeX={layout[0].sizeX}
+  sizeY={layout[0].sizeY}
+  minSizeX={layout[0].minSizeX}
+  minSizeY={layout[0].minSizeY}
+  /* header, content ... */
+/>
+```
 
-| Panel | Header | Position (desktop) |
-| --- | --- | --- |
-| `panel-1` | Sales Data Table | row 0, col 0, 6x5 |
-| `panel-2` | Sales vs Revenue Scatter | row 0, col 6, 6x5 |
-| `panel-3` | Revenue by Product | row 5, col 0, 12x5 |
-| `panel-4` | Revenue Share | row 10, col 0, 6x4 |
+### 4. Saving and restoring the layout
 
-### 6. Theming
+The sample uses the component's built-in persistence, `enablePersistence={true}`. When it is enabled, the component stores the panel positions and sizes in the browser and restores them when the page reloads. Each panel needs a stable, unique `id`, because the saved layout is matched to panels by `id`.
 
-The Material theme for the Dashboard Layout is imported once in `src/App.tsx`:
+```tsx
+<DashboardLayoutComponent enablePersistence={true} /* ... */>
+```
+
+### 5. Theming
+
+The Material theme is imported once in `src/App.tsx`:
 
 ```tsx
 import '@syncfusion/ej2-material-theme/styles/material.css';
 ```
 
-### 7. Sub-path hosting (Azure Linux App Service + Google Load Balancer)
+### 6. Configurable base path
 
-- **Configurable base path.** `vite.config.js` reads the `BASE_PATH` environment variable at build time (default `/`) and normalizes it to the `/segment/` form. All asset URLs, including the favicon, are generated under that path.
+The app is built for the base path `/react-dashboard-layout-integration` by default. Set the `BASE_PATH` environment variable to change it, or to `/` for root hosting. `vite.config.js` applies it to every generated asset URL.
 
-  ```js
-  export default defineConfig(({ mode }) => {
-    const env = loadEnv(mode, process.cwd(), '')
-    const raw = process.env.BASE_PATH ?? env.BASE_PATH ?? '/'
-    const base = `/${raw.replace(/^\/+|\/+$/g, '')}/`.replace(/^\/\/$/, '/')
-    return { base, plugins: [react()] }
-  })
-  ```
+```js
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '')
+  const raw = process.env.BASE_PATH ?? env.BASE_PATH ?? '/react-dashboard-layout-integration'
+  const base = `/${raw.replace(/^\/+|\/+$/g, '')}/`.replace(/^\/\/$/, '/')
+  return { base, plugins: [react()] }
+})
+```
 
-- **Production server.** `server.js` is a dependency-free Node server (`npm start`) that serves `dist/` under `BASE_PATH`. It:
-  - listens on `process.env.PORT`, which App Service provides
-  - redirects `/` and `/<base>` to `/<base>/`
-  - falls back to `index.html` for extension-less routes (SPA fallback)
-  - returns a real `404` for missing files, and `403` for path traversal
-  - sets long-lived cache headers on hashed `assets/` files and `no-cache` on `index.html`
-  - exposes `GET /healthz` for App Service and load balancer health checks
-  - adds basic security headers, and allows only `GET` and `HEAD`
+`server.js` is a small Node server for the production build. It:
+
+- serves `dist/` under `BASE_PATH`;
+- redirects `/` and `/<base>` to `/<base>/`;
+- falls back to `index.html` for routes without a file extension;
+- returns 404 for missing files and blocks path traversal;
+- answers `GET /healthz` for health checks;
+- reads the port from the `PORT` environment variable (default `8080`).
+
+## Integration notes
+
+- `DashboardLayoutComponent` is provided by the `@syncfusion/ej2-react-layouts` package, with styles from `@syncfusion/ej2-material-theme`.
+- Panel content is plain React, so the component does not need to know what it hosts.
+- Panel content should use `width: 100%` and `height: 100%` so it follows panel resizing.
+- Syncfusion components require a valid Syncfusion license for use in applications. See the Syncfusion licensing documentation for the terms that apply to your use.
 
 ## Folder Structure
 
 ```text
 react-dashboard-layout-integration/
-├── public/                 # Static files copied as-is (favicon, icons)
+├── public/                # Static assets (favicon)
 ├── src/
-│   ├── App.tsx             # Dashboard Layout, panels, sample data, responsive logic
-│   ├── App.css             # Dashboard and panel styles
-│   ├── main.tsx            # React entry point
-│   ├── index.css           # Global styles
-│   └── vite-env.d.ts       # Vite type declarations
-├── index.html              # HTML template
-├── vite.config.js          # Vite config, including BASE_PATH support
-├── server.js               # Production server for App Service (base path, SPA fallback, /healthz)
-├── eslint.config.js        # ESLint configuration
-├── tsconfig.json           # TypeScript configuration
-└── package.json            # Scripts and dependencies
+│   ├── App.tsx            # Dashboard Layout and panel definitions
+│   ├── App.css            # Dashboard and panel styles
+│   ├── index.css          # Global styles
+│   ├── main.tsx           # React entry point
+│   └── vite-env.d.ts      # Vite type declarations
+├── index.html             # HTML entry point
+├── server.js              # Production server with base path support
+├── vite.config.js         # Vite config, including the base path
+├── eslint.config.js       # ESLint configuration
+├── tsconfig.json          # TypeScript configuration
+└── package.json           # Dependencies and scripts
 ```
 
 ## How to Run the Sample
 
 ### Requirements
 
-- Node.js 22 or later and npm
+- Node.js 22 or later
+- npm
 
-### Run locally
+### Install and start
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open the URL printed in the terminal (usually `http://localhost:5173`). In development the app is served from `/react-dashboard-layout-integration/` unless `BASE_PATH` is set.
+Open the URL printed in the terminal. In development the app is served from the configured base path, `/react-dashboard-layout-integration/` by default.
 
-### Production build and preview
+### Production build
 
 ```bash
-# Default base path: /react-dashboard-layout-integration
 npm run build
-npm start                     # http://localhost:8080/react-dashboard-layout-integration/
-
-# Custom base path, or BASE_PATH=/ for root hosting
-BASE_PATH=/custom npm run build
-BASE_PATH=/custom npm start   # http://localhost:8080/custom/
+npm start        # http://localhost:8080/react-dashboard-layout-integration/
 ```
 
-`BASE_PATH` must have the same value at **build time** (for asset URLs) and at **run time** (for the server).
+To use a different base path, set `BASE_PATH` for **both** the build and the server:
+
+```bash
+BASE_PATH=/my-path npm run build
+BASE_PATH=/my-path npm start
+```
+
+Behind a proxy or load balancer, forward the full base path to the app without rewriting it.
 
 ### Scripts
 
@@ -150,22 +193,3 @@ BASE_PATH=/custom npm start   # http://localhost:8080/custom/
 | `npm start` | Serve `dist/` with `server.js` |
 | `npm run preview` | Preview the build with Vite |
 | `npm run lint` | Run ESLint |
-
-### Deploy to Azure Linux App Service
-
-1. Create a **Linux** App Service with a **Node 22 LTS** runtime.
-2. Build the app (the base path defaults to `/react-dashboard-layout-integration`): `npm run build`.
-3. Deploy the project, including `dist/`, `server.js` and `package.json`, using zip deploy, GitHub Actions or `az webapp deploy`. Alternatively, enable build during deployment and run the build there.
-4. In **Configuration > Application settings**, add `BASE_PATH` only if you use a value other than the default `/react-dashboard-layout-integration`; it must match the build-time value.
-5. In **Configuration > General settings**, set the **Startup Command** to `npm start`.
-6. Set the **Health check** path to `/healthz`.
-
-### Map a custom domain with Google Cloud Load Balancer
-
-1. Create an **internet NEG** (fully qualified domain name and port) pointing at `<app-name>.azurewebsites.net` on port 443 with HTTPS, and use it as the backend service.
-2. Set the load balancer's **host header** to the App Service hostname, with a custom request header such as `Host: <app-name>.azurewebsites.net`. This makes App Service route the request correctly.
-3. Add a Google-managed certificate for your custom domain to the HTTPS frontend, and point the domain's DNS `A` record to the load balancer IP.
-4. If the sample is served under a sub-path, add a URL map path rule that forwards `/react-dashboard-layout-integration/*` **without rewriting the path**. The app expects to receive the full `/react-dashboard-layout-integration/...` path.
-5. Use `/healthz` as the backend health check path.
-
-Because assets are emitted with the `BASE_PATH` prefix, the app works the same way on the `azurewebsites.net` URL and on the custom domain.
