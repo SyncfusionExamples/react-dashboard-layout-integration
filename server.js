@@ -8,8 +8,8 @@ import { fileURLToPath } from 'node:url'
 
 const DIST = resolve(fileURLToPath(new URL('./dist', import.meta.url)))
 const PORT = process.env.PORT || 8080
-const BASE = `/${(process.env.BASE_PATH ?? '/').replace(/^\/+|\/+$/g, '')}`.replace(/^\/$/, '')
-// "" for root hosting, otherwise e.g. "/dashboard"
+const BASE = `/${(process.env.BASE_PATH ?? '/react-dashboard-layout-integration').replace(/^\/+|\/+$/g, '')}`.replace(/^\/$/, '')
+// "" for root hosting, otherwise e.g. "/react-dashboard-layout-integration"
 
 const TYPES = {
   '.html': 'text/html; charset=utf-8',

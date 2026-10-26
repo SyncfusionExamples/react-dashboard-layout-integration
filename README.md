@@ -125,18 +125,18 @@ npm install
 npm run dev
 ```
 
-Open the URL printed in the terminal (usually `http://localhost:5173`). In development the app is served from `/` unless `BASE_PATH` is set.
+Open the URL printed in the terminal (usually `http://localhost:5173`). In development the app is served from `/react-dashboard-layout-integration/` unless `BASE_PATH` is set.
 
 ### Production build and preview
 
 ```bash
-# Build for the root path
+# Default base path: /react-dashboard-layout-integration
 npm run build
-npm start                     # serves dist/ at http://localhost:8080/
+npm start                     # http://localhost:8080/react-dashboard-layout-integration/
 
-# Build for a sub-path, for example /dashboard
-BASE_PATH=/dashboard npm run build
-BASE_PATH=/dashboard npm start   # http://localhost:8080/dashboard/
+# Custom base path, or BASE_PATH=/ for root hosting
+BASE_PATH=/custom npm run build
+BASE_PATH=/custom npm start   # http://localhost:8080/custom/
 ```
 
 `BASE_PATH` must have the same value at **build time** (for asset URLs) and at **run time** (for the server).
@@ -154,9 +154,9 @@ BASE_PATH=/dashboard npm start   # http://localhost:8080/dashboard/
 ### Deploy to Azure Linux App Service
 
 1. Create a **Linux** App Service with a **Node 22 LTS** runtime.
-2. Build with the sub-path, if any: `BASE_PATH=/dashboard npm run build`.
+2. Build the app (the base path defaults to `/react-dashboard-layout-integration`): `npm run build`.
 3. Deploy the project, including `dist/`, `server.js` and `package.json`, using zip deploy, GitHub Actions or `az webapp deploy`. Alternatively, enable build during deployment and run the build there.
-4. In **Configuration > Application settings**, add `BASE_PATH` with the same value used at build time (omit it for root hosting).
+4. In **Configuration > Application settings**, add `BASE_PATH` only if you use a value other than the default `/react-dashboard-layout-integration`; it must match the build-time value.
 5. In **Configuration > General settings**, set the **Startup Command** to `npm start`.
 6. Set the **Health check** path to `/healthz`.
 
@@ -165,7 +165,7 @@ BASE_PATH=/dashboard npm start   # http://localhost:8080/dashboard/
 1. Create an **internet NEG** (fully qualified domain name and port) pointing at `<app-name>.azurewebsites.net` on port 443 with HTTPS, and use it as the backend service.
 2. Set the load balancer's **host header** to the App Service hostname, with a custom request header such as `Host: <app-name>.azurewebsites.net`. This makes App Service route the request correctly.
 3. Add a Google-managed certificate for your custom domain to the HTTPS frontend, and point the domain's DNS `A` record to the load balancer IP.
-4. If the sample is served under a sub-path, add a URL map path rule that forwards `/dashboard/*` **without rewriting the path**. The app expects to receive the full `/dashboard/...` path.
+4. If the sample is served under a sub-path, add a URL map path rule that forwards `/react-dashboard-layout-integration/*` **without rewriting the path**. The app expects to receive the full `/react-dashboard-layout-integration/...` path.
 5. Use `/healthz` as the backend health check path.
 
 Because assets are emitted with the `BASE_PATH` prefix, the app works the same way on the `azurewebsites.net` URL and on the custom domain.
