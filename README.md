@@ -1,7 +1,5 @@
 # Syncfusion React Dashboard Layout Sample
 
-## Description and Purpose
-
 This sample shows how to use the **Syncfusion React Dashboard Layout** component (`DashboardLayoutComponent`) in a React 19 + TypeScript + Vite application.
 
 It demonstrates:
