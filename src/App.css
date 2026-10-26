@@ -1,0 +1,699 @@
+/* ============================================================================
+   PRESALE DASHBOARD - SYNCFUSION + AG GRID + PLOTLY
+   Complete styling for responsive dashboard layout
+   ============================================================================ */
+
+:root {
+  --primary-color: #0066ff;
+  --secondary-color: #00b4d8;
+  --accent-color: #f77f00;
+  --success-color: #06a77d;
+  --danger-color: #d62828;
+  --background-light: #f8f9fa;
+  --background-dark: #2d3436;
+  --text-primary: #2d3436;
+  --text-secondary: #636e72;
+  --border-color: #dfe6e9;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
+  --border-radius: 8px;
+  --transition: all 0.3s ease;
+}
+
+#root {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  text-align: initial;
+  border: 0;
+  min-height: 100vh;
+}
+
+/* ============================================================================
+   GLOBAL STYLES
+   ============================================================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  background-color: var(--background-light);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* ============================================================================
+   MAIN DASHBOARD CONTAINER
+   ============================================================================ */
+
+.presale-dashboard {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.presale-dashboard.desktop {
+  padding: var(--spacing-md);
+}
+
+.presale-dashboard.mobile {
+  padding: var(--spacing-sm);
+}
+
+/* ============================================================================
+   CONTROL PANEL & TOOLBAR
+   ============================================================================ */
+
+.dashboard-controls {
+  background: white;
+  border-radius: var(--border-radius);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+  border-left: 4px solid var(--primary-color);
+}
+
+.controls-header {
+  margin-bottom: var(--spacing-lg);
+}
+
+.controls-header h1 {
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-sm);
+  font-weight: 700;
+}
+
+.controls-header .subtitle {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.controls-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+/* ============================================================================
+   BUTTONS
+   ============================================================================ */
+
+.btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+  background-color: #0052cc;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary {
+  background-color: var(--background-light);
+  color: var(--text-primary);
+  border: 2px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+  background-color: #f0f2f5;
+  border-color: var(--secondary-color);
+  color: var(--secondary-color);
+}
+
+.btn-secondary:active {
+  background-color: #e9ecef;
+}
+
+/* ============================================================================
+   INFO PANEL (INTEGRATION INFO)
+   ============================================================================ */
+
+.info-panel {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border: 2px solid var(--primary-color);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+}
+
+.info-section {
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.info-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.info-section h3 {
+  color: var(--primary-color);
+  font-size: 1.1rem;
+  margin-bottom: var(--spacing-md);
+  font-weight: 700;
+}
+
+.info-section ul {
+  list-style: none;
+  padding-left: var(--spacing-md);
+}
+
+.info-section li {
+  padding: var(--spacing-sm) 0;
+  color: var(--text-primary);
+  line-height: 1.8;
+  position: relative;
+  padding-left: var(--spacing-lg);
+}
+
+.info-section li:before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--secondary-color);
+  font-weight: bold;
+}
+
+.info-section strong {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* ============================================================================
+   CODE BLOCK
+   ============================================================================ */
+
+.code-block {
+  background: #1e1e1e;
+  color: #d4d4d4;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  overflow-x: auto;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  border-left: 4px solid var(--secondary-color);
+  margin: var(--spacing-md) 0;
+}
+
+.code-block::-webkit-scrollbar {
+  height: 6px;
+}
+
+.code-block::-webkit-scrollbar-track {
+  background: #2d2d2d;
+}
+
+.code-block::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 3px;
+}
+
+/* ============================================================================
+   LICENSE TABLE
+   ============================================================================ */
+
+.license-table {
+  overflow-x: auto;
+  margin: var(--spacing-md) 0;
+}
+
+.license-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.license-table thead {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.license-table th {
+  padding: var(--spacing-md);
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.license-table td {
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.license-table tbody tr:hover {
+  background-color: var(--background-light);
+  transition: var(--transition);
+}
+
+.license-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ============================================================================
+   DASHBOARD CONTAINER & PANELS
+   ============================================================================ */
+
+.dashboard-container {
+  flex: 1;
+  background: white;
+  border-radius: var(--border-radius);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: auto;
+}
+
+.dashboard-layout-frame {
+  width: 100%;
+  min-width: 0;
+}
+
+.dashboard-container .e-dashboard-layout {
+  min-height: 800px;
+}
+
+/* ============================================================================
+   PANEL STYLES
+   ============================================================================ */
+
+.panel-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: white;
+}
+
+.panel-header {
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--border-color);
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.panel-header h3 {
+  color: var(--primary-color);
+  font-size: 1.1rem;
+  margin-bottom: var(--spacing-xs);
+  font-weight: 700;
+}
+
+.panel-description {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* Data Table Panel */
+.data-table-panel {
+  flex: 1;
+  overflow: hidden;
+}
+
+.data-table-panel .ag-root {
+  flex: 1;
+}
+
+.data-table-panel .ag-theme-quartz {
+  flex: 1;
+  background: white;
+}
+
+/* Chart Panel */
+.chart-panel {
+  flex: 1;
+  overflow: hidden;
+  padding: 0;
+}
+
+.chart-panel .panel-header {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.chart-panel > div:last-child {
+  flex: 1;
+  overflow: auto;
+}
+
+/* ============================================================================
+   SYNCFUSION DASHBOARD LAYOUT CUSTOMIZATION
+   ============================================================================ */
+
+.e-panel {
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+  border: 1px solid var(--border-color);
+}
+
+.e-panel:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.e-panel-header {
+  /* background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important; */
+  color: black !important;
+  padding: var(--spacing-md) !important;
+  border-radius: var(--border-radius) var(--border-radius) 0 0 !important;
+  font-weight: 600 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: var(--spacing-sm) !important;
+}
+
+.e-panel-header .e-icons {
+  color: white !important;
+  cursor: pointer !important;
+  transition: var(--transition) !important;
+}
+
+.e-panel-header .e-icons:hover {
+  transform: scale(1.2) !important;
+}
+
+.e-panel-content {
+  padding: 0 !important;
+  height: calc(100% - 45px) !important;
+  overflow: auto !important;
+}
+
+.e-panel.e-resizable {
+  border: 2px solid var(--border-color);
+}
+
+.e-panel.e-resizable:hover {
+  border: 2px solid var(--primary-color);
+}
+
+/* ============================================================================
+   AG GRID THEME CUSTOMIZATION
+   ============================================================================ */
+
+.ag-theme-quartz {
+  --ag-header-background-color: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  --ag-header-foreground-color: white;
+  --ag-grid-size: 6px;
+  --ag-row-border-width: 0px;
+  --ag-row-border-color: var(--border-color);
+  --ag-odd-row-background-color: var(--background-light);
+}
+
+.ag-theme-quartz .ag-header-cell {
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+  color: white !important;
+}
+
+.ag-theme-quartz .ag-row:hover {
+  background-color: #f0f8ff !important;
+}
+
+.ag-theme-quartz .ag-cell-focus {
+  border: 1px solid var(--primary-color);
+}
+
+/* ============================================================================
+   PLOTLY CUSTOMIZATION
+   ============================================================================ */
+
+.plotly-container {
+  width: 100%;
+  height: 100%;
+}
+
+.plotly-graph-div {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+@media (max-width: 1200px) {
+  .dashboard-controls {
+    padding: var(--spacing-md);
+  }
+
+  .dashboard-container {
+    padding: var(--spacing-md);
+  }
+}
+
+@media (max-width: 768px) {
+  .presale-dashboard {
+    padding: var(--spacing-sm);
+  }
+
+  .dashboard-controls {
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .controls-toolbar {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 16px;
+  }
+
+  .dashboard-container {
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .dashboard-container .e-dashboard-layout {
+    min-height: 400px;
+  }
+
+  .info-panel {
+    padding: var(--spacing-md);
+    margin-top: var(--spacing-md);
+  }
+
+  .info-section {
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+  }
+
+  .license-table table {
+    font-size: 0.85rem;
+  }
+
+  .license-table th,
+  .license-table td {
+    padding: 10px;
+  }
+
+  .code-block {
+    font-size: 0.75rem;
+    padding: var(--spacing-sm);
+  }
+
+  .panel-header {
+    padding: var(--spacing-sm);
+  }
+
+  .panel-header h3 {
+    font-size: 0.95rem;
+  }
+
+  .panel-description {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .presale-dashboard {
+    padding: var(--spacing-xs);
+  }
+
+  .dashboard-controls {
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .controls-header .subtitle {
+    font-size: 0.85rem;
+  }
+
+  .dashboard-container {
+    padding: var(--spacing-sm);
+  }
+
+  .info-section h3 {
+    font-size: 1rem;
+  }
+
+  .info-section li {
+    font-size: 0.9rem;
+  }
+
+  .license-table {
+    margin: var(--spacing-sm) 0;
+  }
+
+  .license-table table {
+    font-size: 0.8rem;
+  }
+
+  .license-table th,
+  .license-table td {
+    padding: 8px;
+  }
+
+  .code-block {
+    font-size: 0.7rem;
+    padding: var(--spacing-sm);
+    margin: var(--spacing-sm) 0;
+  }
+}
+
+/* ============================================================================
+   SCROLLBAR STYLING
+   ============================================================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-color);
+}
+
+/* ============================================================================
+   ANIMATIONS
+   ============================================================================ */
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.info-panel {
+  animation: slideInUp 0.4s ease-out;
+}
+
+.panel-content {
+  animation: fadeIn 0.3s ease-in;
+}
+
+/* ============================================================================
+   ACCESSIBILITY
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-light: #1e1e1e;
+    --background-dark: #0d0d0d;
+    --text-primary: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --border-color: #333333;
+  }
+
+  body {
+    background-color: var(--background-dark);
+  }
+
+  .dashboard-controls,
+  .dashboard-container,
+  .info-panel {
+    background: #2d2d2d;
+    color: var(--text-primary);
+  }
+
+  .e-panel {
+    background: #2d2d2d;
+  }
+
+  .e-panel-content {
+    background: #2d2d2d;
+  }
+
+  .license-table table {
+    background: #1e1e1e;
+  }
+
+  .license-table tbody tr:hover {
+    background-color: #333333;
+  }
+}
